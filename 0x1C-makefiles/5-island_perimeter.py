@@ -1,22 +1,27 @@
 #!/usr/bin/python3
-"""5-island_perimeter module"""
+"""A module for working with grid structures.
+"""
 
 
-def island_perimeter(grid):
-    """Returns the perimeter of the island described in grid"""
-    c = 0
-    length = len(grid) - 1
-    width = len(grid[0]) - 1
+def island_perimeter(grid: list) -> int:
+    """Computes the perimeter of the island described in the grid.
 
-    for i, r in enumerate(grid):
-        for j, n in enumerate(r):
-            if n == 1:
-                if i == 0 or grid[i - 1][j] != 1:
-                    c += 1
-                if j == 0 or grid[i][j - 1] != 1:
-                    c += 1
-                if j == width or grid[i][j + 1] != 1:
-                    c += 1
-                if i == length or grid[i + 1][j] != 1:
-                    c += 1
-    return c
+    Args:
+        grid (list of list of integers): For each integer, 0 represents
+        water and 1 represents land.
+
+    Returns:
+        int: The perimeter of the island.
+    """
+    rows = len(grid)
+    perimeter = 0
+    for i in range(rows):
+        cols = len(grid[i])
+        for j in range(cols):
+            if (grid[i][j] == 1):
+                left = 1 if j == 0 or grid[i][j - 1] == 0 else 0
+                top = 1 if i == 0 or grid[i - 1][j] == 0 else 0
+                right = 1 if j == cols - 1 or grid[i][j + 1] == 0 else 0
+                bottom = 1 if i == rows - 1 or grid[i + 1][j] == 0 else 0
+                perimeter += (top + right + bottom + left)
+    return perimeter
